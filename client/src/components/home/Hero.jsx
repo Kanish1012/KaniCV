@@ -6,25 +6,37 @@ const Hero = () => {
 
     return (
         <>
-            {/* Page wrapper */}
             <div className="min-h-screen overflow-hidden">
                 {/* Navbar */}
                 <nav className="z-50 flex items-center justify-between w-full py-4 px-6 md:px-16 lg:px-24 xl:px-40 text-sm">
                     <a href="/">
-                        <img src="/logo.svg" alt="logo" className="h-11 w-auto" />
+                        <img
+                            src="/logo.svg"
+                            alt="logo"
+                            className="h-11 w-auto"
+                        />
                     </a>
 
                     <div className="hidden md:flex items-center gap-8 text-slate-800">
                         <a href="#" className="hover:text-green-600 transition">
                             Home
                         </a>
-                        <a href="#features" className="hover:text-green-600 transition">
+                        <a
+                            href="#features"
+                            className="hover:text-green-600 transition"
+                        >
                             Features
                         </a>
-                        <a href="#testimonials" className="hover:text-green-600 transition">
+                        <a
+                            href="#testimonials"
+                            className="hover:text-green-600 transition"
+                        >
                             Testimonials
                         </a>
-                        <a href="#contact" className="hover:text-green-600 transition">
+                        <a
+                            href="#contact"
+                            className="hover:text-green-600 transition"
+                        >
                             Contact
                         </a>
                     </div>
@@ -67,10 +79,18 @@ const Hero = () => {
                         menuOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
                 >
-                    <a href="#" className="text-white">Home</a>
-                    <a href="#features" className="text-white">Features</a>
-                    <a href="#testimonials" className="text-white">Testimonials</a>
-                    <a href="#contact" className="text-white">Contact</a>
+                    <a href="#" className="text-white">
+                        Home
+                    </a>
+                    <a href="#features" className="text-white">
+                        Features
+                    </a>
+                    <a href="#testimonials" className="text-white">
+                        Testimonials
+                    </a>
+                    <a href="#contact" className="text-white">
+                        Contact
+                    </a>
 
                     <button
                         onClick={() => setMenuOpen(false)}
@@ -80,10 +100,10 @@ const Hero = () => {
                     </button>
                 </div>
 
-                {/* Hero Section */}
+                {/* Hero */}
                 <section className="relative overflow-hidden flex flex-col items-center pt-24 px-4 md:px-16 lg:px-24 xl:px-40 text-black">
                     {/* Background blur */}
-                    <div className="absolute top-24 left-1/4 -z-10 size-72 sm:size-96 bg-green-300 blur-[120px] opacity-30"></div>
+                    <div className="absolute top-24 left-1/4 -z-10 size-72 sm:size-96 bg-green-300 blur-[120px] opacity-30" />
 
                     {/* Social proof */}
                     <div className="flex items-center mb-6">
@@ -107,7 +127,6 @@ const Hero = () => {
                                     .map((_, i) => (
                                         <svg
                                             key={i}
-                                            xmlns="http://www.w3.org/2000/svg"
                                             width="16"
                                             height="16"
                                             fill="currentColor"
@@ -125,14 +144,16 @@ const Hero = () => {
 
                     {/* Headline */}
                     <h1 className="text-5xl md:text-6xl font-semibold max-w-5xl text-center leading-tight">
-                        Land your dream job with{" "}
-                        <span className="bg-gradient-to-r from-green-700 to-green-500 bg-clip-text text-transparent">
-                            AI-powered
-                        </span>{" "}
-                        resumes.
+                        Land your dream job with
+                        <span className="block mt-2">
+                            <span className="bg-gradient-to-r from-green-700 to-green-500 bg-clip-text text-transparent">
+                                AI-powered
+                            </span>{" "}
+                            resume
+                        </span>
                     </h1>
 
-                    {/* Subheading */}
+                    {/* Subtext */}
                     <p className="max-w-md text-center text-base my-7">
                         Create, edit and download professional resumes with
                         AI-powered assistance.
@@ -151,17 +172,24 @@ const Hero = () => {
                             ▶ Try demo
                         </button>
                     </div>
+
+                    {/* Trust / Value strip */}
+                    <div className="mt-16 flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm text-slate-600">
+                        <span>⚡ AI-powered resume builder</span>
+                        <span>📄 ATS-friendly templates</span>
+                        <span>⬇️ Instant PDF downloads</span>
+                    </div>
                 </section>
             </div>
 
             {/* Font */}
             <style>
                 {`
-                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-                * {
-                    font-family: 'Poppins', sans-serif;
-                }
-                `}
+          @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+          * {
+            font-family: 'Poppins', sans-serif;
+          }
+        `}
             </style>
         </>
     );
