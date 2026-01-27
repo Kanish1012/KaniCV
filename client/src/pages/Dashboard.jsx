@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { FilePenLineIcon, PlusIcon, UploadCloudIcon } from "lucide-react";
+import {
+    FilePenLineIcon,
+    PencilIcon,
+    PlusIcon,
+    TrashIcon,
+    UploadCloudIcon,
+} from "lucide-react";
 import { dummyResumeData } from "../assets/assets";
 
 const Dashboard = () => {
@@ -44,7 +50,7 @@ const Dashboard = () => {
                         return (
                             <button
                                 key={i}
-                                className="relative w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border group hover:shadow-lg transition-all duration-300 cursor-pointer"
+                                className="relative group w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border hover:shadow-lg transition-all duration-300 cursor-pointer"
                                 style={{
                                     background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
                                     borderColor: `${baseColor}40`,
@@ -63,14 +69,25 @@ const Dashboard = () => {
                                 </p>
 
                                 <p
-                                    className="absolute bottom-1 text-[11px] text-slate-400 group-hover:text-slate-500 transition-all duration-300 px-2 text-center"
-                                    style={{ color: baseColor + "90" }}
+                                    className="absolute bottom-1 text-[11px] opacity-80 group-hover:opacity-100 transition-all duration-300 px-2 text-center"
+                                    style={{ color: baseColor }}
                                 >
                                     Updated on{" "}
                                     {new Date(
                                         resume.updatedAt,
                                     ).toLocaleDateString()}
                                 </p>
+
+                                <div className="absolute top-1 right-1 hidden items-center group-hover:flex">
+                                    <TrashIcon
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
+                                    />
+                                    <PencilIcon
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
+                                    />
+                                </div>
                             </button>
                         );
                     })}
