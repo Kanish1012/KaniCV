@@ -127,11 +127,12 @@ const Footer = () => {
                 </div>
                 <div className="flex flex-col max-md:items-center max-md:text-center gap-2 items-end">
                     <p className="max-w-60">
-                        Supporting every career journey, from first resume to final offer.
+                        Supporting every career journey, from first resume to
+                        final offer.
                     </p>
                     <div className="flex items-center gap-4 mt-3">
                         <a
-                            href="https://dribbble.com/prebuiltui"
+                            href="https://github.com/Kanish1012"
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -145,17 +146,22 @@ const Footer = () => {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="lucide lucide-dribbble size-5 hover:text-indigo-500"
+                                className="lucide lucide-github size-5 hover:text-green-500"
                                 aria-hidden="true"
                             >
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M19.13 5.09C15.22 9.14 10 10.44 2.25 10.94"></path>
-                                <path d="M21.75 12.84c-6.62-1.41-12.14 1-16.38 6.32"></path>
-                                <path d="M8.56 2.75c4.37 6 6 9.42 8 17.72"></path>
+                                <path
+                                    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61
+        c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77
+        A5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48
+        a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1
+        A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78
+        c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                                />
                             </svg>
                         </a>
+
                         <a
-                            href="https://www.linkedin.com/company/prebuiltui"
+                            href="linkedin.com/in/kanish1012/"
                             target="_blank"
                             rel="noreferrer"
                         >
@@ -169,7 +175,7 @@ const Footer = () => {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="lucide lucide-linkedin size-5 hover:text-indigo-500"
+                                className="lucide lucide-linkedin size-5 hover:text-green-500"
                                 aria-hidden="true"
                             >
                                 <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
@@ -177,10 +183,12 @@ const Footer = () => {
                                 <circle cx="4" cy="4" r="2"></circle>
                             </svg>
                         </a>
+
                         <a
-                            href="https://x.com/prebuiltui"
+                            href="https://www.instagram.com/kanishv_10/"
                             target="_blank"
                             rel="noreferrer"
+                            aria-label="Instagram"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -192,37 +200,32 @@ const Footer = () => {
                                 strokeWidth="2"
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
-                                className="lucide lucide-twitter size-5 hover:text-indigo-500"
+                                className="lucide lucide-instagram size-5 hover:text-green-500"
                                 aria-hidden="true"
                             >
-                                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
-                            </svg>
-                        </a>
-                        <a
-                            href="https://www.youtube.com/@prebuiltui"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                                className="lucide lucide-youtube size-6 hover:text-indigo-500"
-                                aria-hidden="true"
-                            >
-                                <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path>
-                                <path d="m10 15 5-3-5-3z"></path>
+                                <rect
+                                    width="20"
+                                    height="20"
+                                    x="2"
+                                    y="2"
+                                    rx="5"
+                                    ry="5"
+                                ></rect>
+                                <path d="M16 11.37a4 4 0 1 1-7.87 1.26"></path>
+                                <line
+                                    x1="17.5"
+                                    x2="17.51"
+                                    y1="6.5"
+                                    y2="6.5"
+                                ></line>
                             </svg>
                         </a>
                     </div>
                     <p className="mt-3 text-center">
-                        © 2025 <a href="https://prebuiltui.com">PrebuiltUI</a>
+                        © {new Date().getFullYear()}{" "}
+                        <a href="https://prebuiltui.com">
+                            KaniCV Resume Builder
+                        </a>
                     </p>
                 </div>
             </footer>
