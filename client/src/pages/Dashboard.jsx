@@ -11,6 +11,8 @@ import { dummyResumeData } from "../assets/assets";
 const Dashboard = () => {
     const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
     const [allResumes, setAllResumes] = React.useState([]);
+    const [showCreateResume, setShowCreateResume] = useState(false);
+    const [showUploadResume, setShowUploadResume] = useState(false);
     const loadAllResumes = async () => {
         setAllResumes(dummyResumeData);
     };
@@ -91,6 +93,37 @@ const Dashboard = () => {
                             </button>
                         );
                     })}
+                </div>
+
+                <div>
+                    {showCreateResume && (
+                        <form className="fixed inset-0 z-10 flex items-center justify-center bg-black/70 backdrop-blur">
+                            <div className="relative bg-white p-6 rounded-lg w-full max-w-md">
+                                <h2 className="text-xl font-semibold mb-4">
+                                    Create a Resume
+                                </h2>
+
+                                <input
+                                    type="text"
+                                    placeholder="Enter resume title"
+                                    className="w-full px-4 py-2 mb-4 border rounded focus:border-green-600 focus:ring-2 focus:ring-green-600 outline-none"
+                                    required
+                                />
+
+                                <button
+                                    type="submit"
+                                    className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                                >
+                                    Create Resume
+                                </button>
+
+                                <XIcon
+                                    className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+                                    onClick={() => {setShowCreateResume(false); }}
+                                />
+                            </div>
+                        </form>
+                    )}
                 </div>
             </div>
         </div>
