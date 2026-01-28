@@ -7,11 +7,24 @@
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
     }
+    input:not([type="checkbox"]) {
+        @apply outline-none focus:ring border border-gray-300
+    focus:ring-blue-500 focus:border-blue-500 rounded-lg;
+    }
+
+    textarea {
+        @apply outline-none focus:ring border border-gray-300
+    focus:ring-blue-500 focus:border-blue-500 rounded-lg resize-none;
+    }
 }
 
 @keyframes marqueeScroll {
-    0% { transform: translateX(0%); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 .marquee-inner {
@@ -21,4 +34,3 @@
 .marquee-reverse {
     animation-direction: reverse;
 }
-

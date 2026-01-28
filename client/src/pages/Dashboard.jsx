@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     FilePenLineIcon,
     PencilIcon,
     PlusIcon,
     TrashIcon,
     UploadCloudIcon,
+    XIcon,
 } from "lucide-react";
 import { dummyResumeData } from "../assets/assets";
 
@@ -13,9 +15,18 @@ const Dashboard = () => {
     const [allResumes, setAllResumes] = React.useState([]);
     const [showCreateResume, setShowCreateResume] = useState(false);
     const [showUploadResume, setShowUploadResume] = useState(false);
+    const[title, setTitle] = useState("");
+    const[resume, setResume] = useState(null);
+    const navigate = useNavigate();
     const loadAllResumes = async () => {
         setAllResumes(dummyResumeData);
     };
+
+    const createResume = async (e) => {
+        e.preventDefault();
+        setShowCreateResume(false);
+        navigate(`/app/builder/res123`);
+    }
 
     useEffect(() => {
         loadAllResumes();
@@ -29,7 +40,7 @@ const Dashboard = () => {
                 </p>
 
                 <div className="flex gap-4">
-                    <button className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover: border-purple-500 hover: shadow-lg transition-all duration-300 cursor-pointer">
+                    <button onClick={()=> setShowCreateResume(true)} className="w-full bg-white sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 text-slate-600 border border-dashed border-slate-300 group hover: border-purple-500 hover: shadow-lg transition-all duration-300 cursor-pointer">
                         <PlusIcon className="size-11 transition-all duration-300 p-2.5 bg-gradient-to-br from-indigo-300 to-indigo-500 text-white rounded-full" />
                         <p className="text-sm group-hover: text-indigo-600 transition-all duration-300">
                             Create Resume
@@ -97,8 +108,8 @@ const Dashboard = () => {
 
                 <div>
                     {showCreateResume && (
-                        <form className="fixed inset-0 z-10 flex items-center justify-center bg-black/70 backdrop-blur">
-                            <div className="relative bg-white p-6 rounded-lg w-full max-w-md">
+                        <form onSubmit={createResume} onClick={()=> setShowCreateResume(false)} className="fixed inset-0 z-10 flex items-center justify-center bg-black/70 backdrop-blur">
+                            <div onClick={e=>e.stopPropagation()} className="relative bg-slate-50 border shadow-mdrounded-lg w-full max-w-md p-6">
                                 <h2 className="text-xl font-semibold mb-4">
                                     Create a Resume
                                 </h2>
@@ -119,7 +130,7 @@ const Dashboard = () => {
 
                                 <XIcon
                                     className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
-                                    onClick={() => {setShowCreateResume(false); }}
+                                    onClick={() => {setShowCreateResume(false); setTitle("") }}
                                 />
                             </div>
                         </form>
