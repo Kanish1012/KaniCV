@@ -18,6 +18,7 @@ const Dashboard = () => {
     const [showUploadResume, setShowUploadResume] = useState(false);
     const [title, setTitle] = useState("");
     const [resume, setResume] = useState(null);
+    const [editResumeId, setEditResumeId] = useState("");
     const navigate = useNavigate();
     const loadAllResumes = async () => {
         setAllResumes(dummyResumeData);
@@ -33,6 +34,11 @@ const Dashboard = () => {
         e.preventDefault();
         setShowUploadResume(false);
         navigate(`/app/builder/res123`);
+    };
+
+    const editTitle = async (e) => {
+        e.preventDefault();
+        setEditResumeId("");
     };
 
     useEffect(() => {
@@ -76,6 +82,9 @@ const Dashboard = () => {
                         return (
                             <button
                                 key={i}
+                                onClick={() =>
+                                    navigate(`/app/builder/${resume._id}`)
+                                }
                                 className="relative group w-full sm:max-w-36 h-48 flex flex-col items-center justify-center rounded-lg gap-2 border hover:shadow-lg transition-all duration-300 cursor-pointer"
                                 style={{
                                     background: `linear-gradient(135deg, ${baseColor}10, ${baseColor}40)`,
@@ -104,13 +113,20 @@ const Dashboard = () => {
                                     ).toLocaleDateString()}
                                 </p>
 
-                                <div className="absolute top-1 right-1 hidden items-center group-hover:flex">
+                                <div
+                                    onClick={(e) => e.stopPropagation}
+                                    className="absolute top-1 right-1 hidden items-center group-hover:flex"
+                                >
                                     <TrashIcon
                                         onClick={(e) => e.stopPropagation()}
                                         className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
                                     />
                                     <PencilIcon
-                                        onClick={(e) => e.stopPropagation()}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setEditResumeId(resume._id);
+                                            setTitle(resume.title);
+                                        }}
                                         className="size-7 p-1.5 hover:bg-white/50 rounded text-slate-700 transition-colors"
                                     />
                                 </div>
@@ -212,7 +228,6 @@ const Dashboard = () => {
                                             setResume(e.target.files[0])
                                         }
                                     />
-                                    
                                 </div>
                                 <button
                                     type="submit"
@@ -225,6 +240,47 @@ const Dashboard = () => {
                                     className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
                                     onClick={() => {
                                         setShowUploadResume(false);
+                                        setTitle("");
+                                    }}
+                                />
+                            </div>
+                        </form>
+                    )}
+
+                    {editResumeId && (
+                        <form
+                            onSubmit={editTitle}
+                            onClick={() => setEditResumeId("")}
+                            className="fixed inset-0 z-10 flex items-center justify-center bg-black/70 backdrop-blur"
+                        >
+                            <div
+                                onClick={(e) => e.stopPropagation()}
+                                className="relative bg-slate-50 border shadow-mdrounded-lg w-full max-w-md p-6"
+                            >
+                                <h2 className="text-xl font-semibold mb-4">
+                                    Edit Resume Title
+                                </h2>
+
+                                <input
+                                    type="text"
+                                    placeholder="Enter resume title"
+                                    className="w-full px-4 py-2 mb-4 border rounded focus:border-green-600 focus:ring-2 focus:ring-green-600 outline-none"
+                                    required
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    value={title}
+                                />
+
+                                <button
+                                    type="submit"
+                                    className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+                                >
+                                    Update
+                                </button>
+
+                                <XIcon
+                                    className="absolute top-4 right-4 text-slate-400 hover:text-slate-600 cursor-pointer transition-colors"
+                                    onClick={() => {
+                                        setEditResumeId("");
                                         setTitle("");
                                     }}
                                 />
