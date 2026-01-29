@@ -11,6 +11,10 @@ const PersonalInfoForm = ({
         onChange({ ...data, [field]: value });
     };
 
+    const setupImageBackgroundRemoval = () => {
+        
+    }
+
     return (
         <div>
             <h3 className="text-lg font-semibold text-gray-900">
