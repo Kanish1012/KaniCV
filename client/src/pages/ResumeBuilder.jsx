@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { act, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { dummyResumeData } from "../assets/assets";
 import {
@@ -86,7 +86,7 @@ const ResumeBuilder = () => {
                                 }}
                             />
 
-                            {/* Navigation */}
+                            {/* Section Navigation */}
                             <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
                                 <div></div>
 
@@ -128,6 +128,13 @@ const ResumeBuilder = () => {
                                         </button>
                                     )}
                                 </div>
+                            </div>
+
+                            {/* Form Section */}
+                            <div className="space-y-6">
+                                {activeSection.id === "personal" && (
+                                    div
+                                )}
                             </div>
                         </div>
                     </div>
