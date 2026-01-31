@@ -1,6 +1,5 @@
-import React, { act, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { dummyResumeData } from "../assets/assets";
 import {
     ArrowLeftIcon,
     Briefcase,
@@ -12,8 +11,11 @@ import {
     Sparkles,
     User,
 } from "lucide-react";
+
+import { dummyResumeData } from "../assets/assets";
 import PersonalInfoForm from "../components/PersonalInfoForm";
 import ResumePreview from "../components/ResumePreview";
+import TemplateSelector from "../components/TemplateSelector";
 
 const ResumeBuilder = () => {
     const { resumeId } = useParams();
@@ -46,19 +48,13 @@ const ResumeBuilder = () => {
 
     const activeSection = sections[activeSectionIndex];
 
-    const loadExistingResume = async () => {
-        const resume = dummyResumeData.find(
-            (resume) => resume._id === resumeId,
-        );
+    useEffect(() => {
+        const resume = dummyResumeData.find((r) => r._id === resumeId);
         if (resume) {
             setResumeData(resume);
             document.title = resume.title;
         }
-    };
-
-    useEffect(() => {
-        loadExistingResume();
-    }, []);
+    }, [resumeId]);
 
     return (
         <div>
@@ -74,34 +70,40 @@ const ResumeBuilder = () => {
 
             <div className="max-w-7xl mx-auto px-4 pb-8">
                 <div className="grid lg:grid-cols-12 gap-8">
-                    {/* Left Panel - Form */}
-                    <div className="relative lg:col-span-5 rounded-lg overflow-hidden">
-                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1">
-                            {/* Background progress bar */}
+                    {/* Left Panel */}
+                    <div className="lg:col-span-5">
+                        <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 pt-1 relative">
                             <hr className="absolute top-0 left-0 right-0 border-2 border-gray-200" />
-
-                            {/* Active progress bar */}
                             <hr
-                                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 border-none transition-all duration-1000"
+                                className="absolute top-0 left-0 h-1 bg-gradient-to-r from-green-500 to-green-600 transition-all duration-700"
                                 style={{
-                                    width: `${(activeSectionIndex * 100) / (sections.length - 1)}%`,
+                                    width: `${
+                                        (activeSectionIndex * 100) /
+                                        (sections.length - 1)
+                                    }%`,
                                 }}
                             />
 
-                            {/* Section Navigation */}
+                            {/* Section */}
                             <div className="flex justify-between items-center mb-6 border-b border-gray-300 py-1">
-                                <div></div>
+                                <div className="flex items-center gap-2">
+                                    <TemplateSelector
+                                        selectedTemplate={resumeData.template}
+                                        onChange={(template) =>
+                                            setResumeData((prev) => ({
+                                                ...prev,
+                                                template,
+                                            }))
+                                        }
+                                    />
+                                </div>
 
                                 <div className="flex items-center gap-2">
-                                    {activeSectionIndex !== 0 && (
+                                    {activeSectionIndex > 0 && (
                                         <button
                                             onClick={() =>
-                                                setActiveSectionIndex(
-                                                    (prevIndex) =>
-                                                        Math.max(
-                                                            prevIndex - 1,
-                                                            0,
-                                                        ),
+                                                setActiveSectionIndex((p) =>
+                                                    Math.max(p - 1, 0),
                                                 )
                                             }
                                             className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
@@ -115,12 +117,11 @@ const ResumeBuilder = () => {
                                         sections.length - 1 && (
                                         <button
                                             onClick={() =>
-                                                setActiveSectionIndex(
-                                                    (prevIndex) =>
-                                                        Math.min(
-                                                            prevIndex + 1,
-                                                            sections.length - 1,
-                                                        ),
+                                                setActiveSectionIndex((p) =>
+                                                    Math.min(
+                                                        p + 1,
+                                                        sections.length - 1,
+                                                    ),
                                                 )
                                             }
                                             className="flex items-center gap-1 p-3 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 transition-all"
@@ -132,7 +133,7 @@ const ResumeBuilder = () => {
                                 </div>
                             </div>
 
-                            {/* Form Section */}
+                            {/* Form */}
                             <div className="space-y-6">
                                 {activeSection.id === "personal" && (
                                     <PersonalInfoForm
@@ -153,10 +154,8 @@ const ResumeBuilder = () => {
                         </div>
                     </div>
 
-                    {/* Right Panel - Preview */}
+                    {/* Right Panel */}
                     <div className="lg:col-span-7 max-lg:mt-6">
-                        <div>{/*Buttons*/}</div>
-
                         <ResumePreview
                             data={resumeData}
                             template={resumeData.template}

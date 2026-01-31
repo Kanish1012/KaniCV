@@ -5,7 +5,7 @@ import MinimalImageTemplate from "./templates/MinimalImageTemplate";
 import ClassicTemplate from "./templates/ClassicTemplate";
 
 const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
-    const renderTemplacte = () => {
+    const renderTemplate = () => {
         switch (template) {
             case "modern":
                 return <ModernTemplate data={data} accentColor={accentColor} />;
@@ -18,7 +18,7 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
                     <MinimalImageTemplate
                         data={data}
                         accentColor={accentColor}
-                        removeImageBackground={true}
+                        removeImageBackground
                     />
                 );
             default:
@@ -34,10 +34,10 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
                 id="resume-preview"
                 className={`border border-gray-200 print:shadow-none print:border-none ${classes}`}
             >
-                {renderTemplacte()}
+                {renderTemplate()}
             </div>
 
-            <style jsx global>{`
+            <style>{`
                 @page {
                     size: letter;
                     margin: 0;
@@ -65,7 +65,6 @@ const ResumePreview = ({ data, template, accentColor, classes = "" }) => {
                         left: 0;
                         top: 0;
                         width: 100%;
-                        height: auto;
                         margin: 0;
                         padding: 0;
                         box-shadow: none !important;
