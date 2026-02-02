@@ -115,7 +115,7 @@ const ExperienceForm = ({ data, onChange }) => {
                                             e.target.value,
                                         )
                                     }
-                                    type="date"
+                                    type="month"
                                     className="px-3 py-2 text-sm rounded-lg"
                                 />
 
@@ -128,7 +128,7 @@ const ExperienceForm = ({ data, onChange }) => {
                                             e.target.value,
                                         )
                                     }
-                                    type="date"
+                                    type="month"
                                     disabled={experience.is_current}
                                     className="px-3 py-2 text-sm rounded-lg disabled:bg-gray-100"
                                 />
