@@ -135,7 +135,7 @@ const MinimalTemplate = ({ data, accentColor }) => {
                                     </p>
                                     {edu.gpa && (
                                         <p className="text-sm text-gray-500">
-                                            GPA: {edu.gpa}
+                                            CGPA: {edu.gpa}
                                         </p>
                                     )}
                                 </div>
