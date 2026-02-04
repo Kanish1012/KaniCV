@@ -1,5 +1,15 @@
 import { Mail, Phone, MapPin, Linkedin, Globe } from "lucide-react";
 
+/* ===== Date Helpers ===== */
+const formatMonthYear = (value) => {
+    if (!value) return "";
+    const [year, month] = value.split("-");
+    return new Date(year, month - 1).toLocaleDateString("en-US", {
+        month: "short",
+        year: "numeric",
+    });
+};
+
 const ModernTemplate = ({ data, accentColor }) => {
     const formatDate = (dateStr) => {
         if (!dateStr) return "";
@@ -25,7 +35,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.full_name || "Your Name"}
                 </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1 gap-x-4 text-sm">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-1.5 gap-x-4 text-sm">
                     {data.personal_info?.email && (
                         <div className="flex items-center gap-2">
                             <Mail className="size-4" />
@@ -47,6 +57,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.linkedin && (
                         <a
                             target="_blank"
+                            rel="noopener noreferrer"
                             href={data.personal_info.linkedin}
                             className="flex items-center gap-2"
                         >
@@ -62,6 +73,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                     {data.personal_info?.website && (
                         <a
                             target="_blank"
+                            rel="noopener noreferrer"
                             href={data.personal_info.website}
                             className="flex items-center gap-2"
                         >
@@ -93,7 +105,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                 {/* Experience */}
                 {data.experience?.length > 0 && (
                     <section className="mb-6">
-                        <h2 className="text-xl font-light mb-4 pb-1 border-b border-gray-200">
+                        <h2 className="text-xl font-light mb-3 pb-1 border-b border-gray-200">
                             Experience
                         </h2>
 
@@ -103,7 +115,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                     key={index}
                                     className="relative pl-5 border-l border-gray-200"
                                 >
-                                    <div className="flex justify-between items-start mb-1">
+                                    <div className="flex justify-between items-start mb-1.5">
                                         <div>
                                             <h3 className="text-lg font-medium text-gray-900">
                                                 {exp.position}
@@ -115,7 +127,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                                 {exp.company}
                                             </p>
                                         </div>
-                                        <div className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded">
+                                        <div className="text-xs text-gray-500 bg-gray-100 px-2.5 py-0.5 rounded">
                                             {formatDate(exp.start_date)} –{" "}
                                             {exp.is_current
                                                 ? "Present"
@@ -196,6 +208,43 @@ const ModernTemplate = ({ data, accentColor }) => {
                                     </div>
                                 ))}
                             </div>
+
+                            {/* Certifications */}
+                            {data.certifications?.length > 0 && (
+                                <div className="mt-5">
+                                    <h3 className="text-sm font-medium mb-2.5 text-gray-700">
+                                        Certifications
+                                    </h3>
+
+                                    <div className="space-y-2 text-sm text-gray-700">
+                                        {data.certifications.map(
+                                            (cert, index) => (
+                                                <div key={index}>
+                                                    <a
+                                                        href={cert.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="font-medium text-gray-900"
+                                                    >
+                                                        {cert.name}
+                                                    </a>{" "}
+                                                    — {cert.issuer}
+                                                    {cert.year && (
+                                                        <span className="text-gray-500">
+                                                            {" "}
+                                                            (
+                                                            {formatMonthYear(
+                                                                cert.year,
+                                                            )}
+                                                            )
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            ),
+                                        )}
+                                    </div>
+                                </div>
+                            )}
                         </section>
                     )}
 
@@ -206,7 +255,7 @@ const ModernTemplate = ({ data, accentColor }) => {
                                 Skills
                             </h2>
 
-                            <div className="flex flex-wrap gap-2">
+                            <div className="flex flex-wrap gap-2.5">
                                 {data.skills.map((skill, index) => (
                                     <span
                                         key={index}
