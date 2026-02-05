@@ -212,9 +212,9 @@ const ModernTemplate = ({ data, accentColor }) => {
                             {/* Certifications */}
                             {data.certifications?.length > 0 && (
                                 <div className="mt-5">
-                                    <h3 className="text-sm font-medium mb-2.5 text-gray-700">
+                                    <h2 className="text-xl font-light mb-3 pb-1 border-b border-gray-200">
                                         Certifications
-                                    </h3>
+                                    </h2>
 
                                     <div className="space-y-2 text-sm text-gray-700">
                                         {data.certifications.map(
