@@ -46,3 +46,63 @@ export const registerUser = async (req, res) => {
 };
 
 // User login
+// post: /api/users/login
+
+export const loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            return res.status(400).json({
+                message: "Email and password are required",
+            });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({
+                message: "Invalid email or password",
+            });
+        }
+
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(400).json({
+                message: "Invalid email or password",
+            });
+        }
+
+        const token = generateToken(user._id);
+        user.password = undefined;
+
+        return res.status(200).json({
+            message: "Login successful",
+            token,
+            user,
+        });
+    } catch (error) {
+        return res.status(400).json({ message: error.message });
+    }
+};
+
+// controller for getting user by id
+// get: /api/users/data
+
+export const getUserId = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const user = await User.findById(userId).select("-password");
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+            });
+        }
+
+        return res.status(200).json({ user });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
