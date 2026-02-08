@@ -42,7 +42,7 @@ export const registerUser = async (req, res) => {
             user: newUser,
         });
     } catch (error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(500).json({ message: "Server error" });
     }
 };
 
@@ -82,7 +82,7 @@ export const loginUser = async (req, res) => {
             user,
         });
     } catch (error) {
-        return res.status(400).json({ message: error.message });
+        return res.status(500).json({ message: "Server error" });
     }
 };
 
@@ -94,7 +94,7 @@ export const getUserId = async (req, res) => {
         const userId = req.userId;
         const user = await User.findById(userId).select("-password");
         if (!user) {
-            return res.status(404).json({
+            return res.status(400).json({
                 message: "User not found",
             });
         }
@@ -111,12 +111,12 @@ export const getUserId = async (req, res) => {
 // controller for getting user resumes
 // get: /api/users/resumes
 
-export const getuserResumes = async (req, res) => {
+export const getUserResumes = async (req, res) => {
     try {
         const userId = req.userId;
         const resumes = await Resume.find({ userId }).sort({ updatedAt: -1 });
         return res.status(200).json({ resumes });
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: "Server error" });
     }
 };
