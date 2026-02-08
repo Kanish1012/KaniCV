@@ -7,7 +7,7 @@ const connectDB = async () => {
         });
 
         let mongodbURI = process.env.MONGODB_URI;
-        const projName = "KaniCV - AI Resume Builder";
+        const projName = "kanicv";
 
         if (!mongodbURI) {
             throw new Error("MongoDB URI not set");
