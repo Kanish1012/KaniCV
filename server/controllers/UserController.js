@@ -1,3 +1,4 @@
+import Resume from "../models/Resume.js";
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 
@@ -104,5 +105,18 @@ export const getUserId = async (req, res) => {
         return res.status(500).json({
             message: "Server error",
         });
+    }
+};
+
+// controller for getting user resumes
+// get: /api/users/resumes
+
+export const getuserResumes = async (req, res) => {
+    try {
+        const userId = req.userId;
+        const resumes = await Resume.find({ userId }).sort({ updatedAt: -1 });
+        return res.status(200).json({ resumes });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
     }
 };
