@@ -1,3 +1,4 @@
+import { json } from "express";
 import ai from "../config/ai.js";
 import Resume from "../models/Resume.js";
 
@@ -81,10 +82,13 @@ export const uploadResume = async (req, res) => {
             return res.status(400).json({ message: "Missing required data" });
         }
 
-        const systemPrompt = `
-You are an expert resume parser.
-Extract structured resume data and return ONLY valid JSON.
-No explanations, no markdown, no extra text.
+        const systemPrompt =
+            "You are an expert AI agent that extracts structured resume data.";
+
+        const userPrompt = `
+Extract structured data from the following resume text.
+
+Return ONLY valid JSON. Do not include explanations or formatting.
 
 JSON format:
 {
@@ -100,50 +104,21 @@ JSON format:
     "linkedin": "",
     "website": ""
   },
-  "experience": [
-    {
-      "company": "",
-      "position": "",
-      "start_date": "",
-      "end_date": "",
-      "description": "",
-      "is_current": false
-    }
-  ],
-  "project": [
-    {
-      "name": "",
-      "type": "",
-      "description": ""
-    }
-  ],
-  "education": [
-    {
-      "institute": "",
-      "degree": "",
-      "field": "",
-      "graduation_date": "",
-      "gpa": false
-    }
-  ],
-  "certifications": [
-    {
-      "name": "",
-      "issuer": "",
-      "year": "",
-      "url": ""
-    }
-  ]
+  "experience": [],
+  "project": [],
+  "education": [],
+  "certifications": []
 }
+
+Resume text:
+${resumeText}
 `;
 
         const response = await ai.chat.completions.create({
             model: process.env.OPEN_AI_MODEL,
-            temperature: 0, // deterministic output
-            max_tokens: 800,
             messages: [
                 { role: "system", content: systemPrompt },
-                { role: "user", content: resumeText },
+                { role: "user", content: userPrompt },
             ],
             response_format: { type: "json_object" },
         });
@@ -151,10 +126,9 @@ JSON format:
         let parsedData;
         try {
             parsedData = JSON.parse(response.choices[0].message.content);
-        } catch (err) {
-            console.error("JSON parse error:", err);
+        } catch {
             return res.status(500).json({
-                message: "Failed to parse resume data",
+                message: "AI returned invalid resume data",
             });
         }
 
@@ -164,9 +138,7 @@ JSON format:
             ...parsedData,
         });
 
-        return res.status(201).json({
-            resumeId: newResume._id,
-        });
+        return res.json({ resumeId: newResume._id });
     } catch (error) {
         console.error(error);
         return res.status(500).json({ message: "Server error" });

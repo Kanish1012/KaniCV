@@ -13,6 +13,7 @@ import { dummyResumeData } from "../assets/assets";
 import { useSelector } from "react-redux";
 import api from "../configs/api";
 import toast from "react-hot-toast";
+import pdfToText from "react-pdftotext";
 
 const Dashboard = () => {
     const { user, token } = useSelector((state) => state.auth);
@@ -24,6 +25,7 @@ const Dashboard = () => {
     const [title, setTitle] = useState("");
     const [resume, setResume] = useState(null);
     const [editResumeId, setEditResumeId] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
     const loadAllResumes = async () => {
@@ -54,8 +56,43 @@ const Dashboard = () => {
 
     const uploadResume = async (e) => {
         e.preventDefault();
-        setShowUploadResume(false);
-        navigate(`/app/builder/res123`);
+        setIsLoading(true);
+
+        try {
+            if (!resume) {
+                toast.error("Please select a resume file");
+                return;
+            }
+
+            const resumeText = await pdfToText(resume);
+
+            if (!resumeText || resumeText.trim().length < 30) {
+                toast.error("Unable to extract text from resume");
+                return;
+            }
+            const { data } = await api.post(
+                "/api/ai/upload-resume",
+                {
+                    title,
+                    resumeText,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+
+            setTitle("");
+            setResume(null);
+            setShowUploadResume(false);
+
+            navigate(`/app/builder/${data.resumeId}`);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error.message);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const editTitle = async (e) => {
