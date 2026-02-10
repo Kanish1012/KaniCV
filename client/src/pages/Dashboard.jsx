@@ -10,8 +10,13 @@ import {
     UploadCloud,
 } from "lucide-react";
 import { dummyResumeData } from "../assets/assets";
+import { useSelector } from "react-redux";
+import api from "../configs/api";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
+    const { user, token } = useSelector((state) => state.auth);
+
     const colors = ["#9333ea", "#d97706", "#dc2626", "#0284c7", "#16a34a"];
     const [allResumes, setAllResumes] = React.useState([]);
     const [showCreateResume, setShowCreateResume] = useState(false);
@@ -20,14 +25,31 @@ const Dashboard = () => {
     const [resume, setResume] = useState(null);
     const [editResumeId, setEditResumeId] = useState("");
     const navigate = useNavigate();
+
     const loadAllResumes = async () => {
         setAllResumes(dummyResumeData);
     };
 
     const createResume = async (e) => {
-        e.preventDefault();
-        setShowCreateResume(false);
-        navigate(`/app/builder/res123`);
+        try {
+            e.preventDefault();
+            const { data } = await api.post(
+                "/api/resumes/create",
+                { title },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },
+            );
+
+            setAllResumes([...allResumes, data.resume]);
+            setTitle("");
+            setShowCreateResume(false);
+            navigate(`/app/builder/${data.resume._id}`);
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error.message);
+        }
     };
 
     const uploadResume = async (e) => {
