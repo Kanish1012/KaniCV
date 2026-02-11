@@ -90,10 +90,10 @@ export const updateResume = async (req, res) => {
         const image = req.file;
 
         let resumeDataCopy;
-        try {
+        if (typeof resumeData === "string") {
+            resumeDataCopy = JSON.parse(resumeData);
+        } else {
             resumeDataCopy = JSON.parse(JSON.stringify(resumeData));
-        } catch {
-            return res.status(400).json({ message: "Invalid resume data" });
         }
 
         if (image) {
@@ -110,6 +110,7 @@ export const updateResume = async (req, res) => {
             });
 
             resumeDataCopy.personal_info.image = response.url;
+            fs.unlinkSync(image.path);
         }
 
         const resume = await Resume.findOneAndUpdate(
@@ -127,6 +128,9 @@ export const updateResume = async (req, res) => {
             .status(200)
             .json({ message: "Updated successfully", resume });
     } catch (error) {
-        return res.status(500).json({ message: "Server error" });
+        console.error("UPDATE RESUME ERROR:", error);
+        return res.status(500).json({
+            message: error.message || "Server error",
+        });
     }
 };
