@@ -8,6 +8,8 @@ import {
     UploadCloudIcon,
     XIcon,
     UploadCloud,
+    LoaderCircle,
+    LoaderCircleIcon,
 } from "lucide-react";
 import { dummyResumeData } from "../assets/assets";
 import { useSelector } from "react-redux";
@@ -110,19 +112,34 @@ const Dashboard = () => {
     };
 
     const deleteResume = async (resumeId) => {
-        const confirm = window.confirm(
-            "Are you sure you want to delete this resume?",
-        );
-        if (confirm) {
-            setAllResumes((prev) =>
-                prev.filter((resume) => resume._id !== resumeId),
+        try {
+            const confirm = window.confirm(
+                "Are you sure you want to delete this resume?",
             );
+            if (confirm) {
+                const { data } = await api.delete(
+                    `/api/resumes/delete/${resumeId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    },
+                );
+                setAllResumes((prev) =>
+                    prev.filter((resume) => resume._id !== resumeId),
+                );
+                toast.success(data.message || "Resume deleted successfully");
+            }
+        } catch (error) {
+            toast.error(error?.response?.data?.message || error.message);
         }
     };
 
     useEffect(() => {
-        loadAllResumes();
-    }, []);
+        if (token) {
+            loadAllResumes();
+        }
+    }, [token]);
 
     return (
         <div>
@@ -315,7 +332,12 @@ const Dashboard = () => {
                                     type="submit"
                                     className="w-full py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
                                 >
-                                    Upload Resume
+                                    {isLoading && (
+                                        <LoaderCircleIcon className="animate-spin size-4 text-white" />
+                                    )}
+                                    {isLoading
+                                        ? "Uploading..."
+                                        : "Upload Resume"}
                                 </button>
 
                                 <XIcon
