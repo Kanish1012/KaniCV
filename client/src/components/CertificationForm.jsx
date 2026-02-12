@@ -74,7 +74,7 @@ const CertificationForm = ({ data = [], onChange }) => {
 
                         <input
                             type="text"
-                            placeholder="Certification Name (e.g., AWS Certified Solutions Architect)"
+                            placeholder="Certification Name"
                             value={cert.name}
                             onChange={(e) =>
                                 updateCertification(
@@ -88,7 +88,7 @@ const CertificationForm = ({ data = [], onChange }) => {
 
                         <input
                             type="text"
-                            placeholder="Issuing Organization (e.g., Amazon Web Services)"
+                            placeholder="Issuing Organization"
                             value={cert.issuer}
                             onChange={(e) =>
                                 updateCertification(
